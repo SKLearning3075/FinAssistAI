@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37502.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Api", "FinAssistAI.Api\FinAssistAI.Api.csproj", "{804E42A6-CA78-4B95-A020-BED6E88AF6D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Core", "FinAssistAI.Core\FinAssistAI.Core.csproj", "{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Infrastructure", "FinAssistAI.Infrastructure\FinAssistAI.Infrastructure.csproj", "{C024E619-3501-4228-87C5-8C8D3B016CF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Shared", "FinAssistAI.Shared\FinAssistAI.Shared.csproj", "{5762D807-EB03-424B-BF53-D4D8937D1D6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{55497EB6-9EBC-4A08-8682-0DCBE01FB5DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6BA6789F-3B18-4742-83B0-4DD0E76B225F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Tests", "FinAssistAI.Tests\FinAssistAI.Tests.csproj", "{A0B38734-FE9C-4336-B8AA-B61B317BCC08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{804E42A6-CA78-4B95-A020-BED6E88AF6D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804E42A6-CA78-4B95-A020-BED6E88AF6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804E42A6-CA78-4B95-A020-BED6E88AF6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804E42A6-CA78-4B95-A020-BED6E88AF6D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C024E619-3501-4228-87C5-8C8D3B016CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C024E619-3501-4228-87C5-8C8D3B016CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C024E619-3501-4228-87C5-8C8D3B016CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C024E619-3501-4228-87C5-8C8D3B016CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5762D807-EB03-424B-BF53-D4D8937D1D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5762D807-EB03-424B-BF53-D4D8937D1D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5762D807-EB03-424B-BF53-D4D8937D1D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5762D807-EB03-424B-BF53-D4D8937D1D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B38734-FE9C-4336-B8AA-B61B317BCC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B38734-FE9C-4336-B8AA-B61B317BCC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B38734-FE9C-4336-B8AA-B61B317BCC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B38734-FE9C-4336-B8AA-B61B317BCC08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{804E42A6-CA78-4B95-A020-BED6E88AF6D0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{4B0C8F35-CDC1-4A41-A52D-BB9EE9A3FE26} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C024E619-3501-4228-87C5-8C8D3B016CF2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5762D807-EB03-424B-BF53-D4D8937D1D6B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A0B38734-FE9C-4336-B8AA-B61B317BCC08} = {55497EB6-9EBC-4A08-8682-0DCBE01FB5DA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {808E32EE-6481-4041-8467-541CF3D43678}
+	EndGlobalSection
+EndGlobal
