@@ -10,14 +10,9 @@ namespace FinAssistAI.Core.Models.Request
 {
     public class AIChatRequest
     {
-        public IReadOnlyCollection<ChatMessage> Messages { get; init; } = [];
-
-        public double Temperature { get; init; } = 0.7;
-
-        public int MaxTokens { get; init; } = 1000;
-
+        public List<ChatMessage> Messages { get; init; } = [];
+        public string? SystemPrompt { get; init; }  = string.Empty;
         public bool Stream { get; init; } = false;
-
         public string? Model { get; init; }
     }
 }

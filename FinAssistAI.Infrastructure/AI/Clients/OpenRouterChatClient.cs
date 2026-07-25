@@ -17,11 +17,13 @@ namespace FinAssistAI.Infrastructure.AI.Clients
     public class OpenRouterChatClient : IAIChatClient
     {
         private readonly HttpClient _httpClient;
-        private readonly OpenRouterOptions _options;
-        public OpenRouterChatClient(HttpClient httpClient, IOptions<OpenRouterOptions> options)
+        private readonly OpenRouterOptions _openRouterOptions;
+        private readonly AISettingsOptions _aiSettingsOptions;
+        public OpenRouterChatClient(HttpClient httpClient, IOptions<OpenRouterOptions> openRouterOptions, IOptions<AISettingsOptions> aiSettingsOptions)
         {
             this._httpClient = httpClient;
-            this._options = options.Value;
+            this._openRouterOptions = openRouterOptions.Value;
+            this._aiSettingsOptions = aiSettingsOptions.Value;
         }
 
         public async Task<AIChatResult> GenerateResponseAsync(AIChatRequest request, CancellationToken cancellationToken = default)
@@ -34,7 +36,7 @@ namespace FinAssistAI.Infrastructure.AI.Clients
             var response = await _httpClient.SendAsync(
             httpRequest,
             cancellationToken);
-            
+
             var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
             //response.EnsureSuccessStatusCode();
 
@@ -62,54 +64,69 @@ namespace FinAssistAI.Infrastructure.AI.Clients
             return BuildResult(openRouterResponse);
 
         }
-
         private OpenRouterRequest BuildRequest(AIChatRequest request)
         {
-            return new OpenRouterRequest
+
+            var messages = new List<ChatMessage>();
+
+            if (!string.IsNullOrEmpty(request.SystemPrompt))
             {
-                Model = _options.ChatModel,
-
-                Messages =
-                [
-                    new ChatMessage
+                messages.Add(new ChatMessage
                 {
-                    Role = "user",
-                    Content = request.Messages.FirstOrDefault()?.Content ?? string.Empty
-                }
-                ]
-            };
-        }
+                    Role = "system",
+                    Content = request.SystemPrompt
+                });
+            }
 
+            messages.AddRange(
+                    request.Messages.Select(m => new ChatMessage
+                    {
+                        Role = m.Role,
+                        Content = m.Content
+                    }));
+
+            var openRouterRequest = new OpenRouterRequest
+            {
+                Model = _openRouterOptions.ChatModel,
+                Temperature = _aiSettingsOptions.Temperature,
+                MaxTokens = _aiSettingsOptions.MaxTokens,
+                Messages = messages
+            }; 
+
+            var json = JsonSerializer.Serialize(openRouterRequest, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
+            Console.WriteLine(json);
+
+            return openRouterRequest;
+        }
         private void ConfigureHttpClient()
         {
             _httpClient.BaseAddress =
-                new Uri(_options.BaseUrl);
+                new Uri(_openRouterOptions.BaseUrl);
 
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue(
                     "Bearer",
-                    _options.ApiKey);
+                    _openRouterOptions.ApiKey);
 
             _httpClient.DefaultRequestHeaders.Accept.Clear();
 
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
         private static HttpRequestMessage CreateHttpRequest(
             OpenRouterRequest request)
         {
-            return new HttpRequestMessage(
-                HttpMethod.Post,
-                "chat/completions")
+            return new HttpRequestMessage(HttpMethod.Post,"chat/completions")
             {
-                Content = new StringContent(
-                    JsonSerializer.Serialize(request),
+                    Content = new StringContent(JsonSerializer.Serialize(request),
                     Encoding.UTF8,
                     "application/json")
             };
         }
-
         private static AIChatResult BuildResult(
             OpenRouterResponse response)
         {

@@ -8,6 +8,9 @@ namespace FinAssistAI.Core.Models.Request
 {
     public class ChatRequest
     {
-        public string Message { get; set; }
+        public Guid? ConversationId { get; set; }
+        public string UserId { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+        public string? SystemPrompt { get; set; } = string.Empty;
     }
 }
