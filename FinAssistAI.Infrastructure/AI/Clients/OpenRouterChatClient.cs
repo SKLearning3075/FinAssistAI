@@ -4,6 +4,7 @@ using FinAssistAI.Core.Models.Request;
 using FinAssistAI.Infrastructure.AI.Configuration;
 using FinAssistAI.Infrastructure.AI.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace FinAssistAI.Infrastructure.AI.Clients
                         Role = m.Role,
                         Content = m.Content
                     }));
-
+            Console.WriteLine($"User message added to conversation {request.Messages.Count}");
             var openRouterRequest = new OpenRouterRequest
             {
                 Model = _openRouterOptions.ChatModel,

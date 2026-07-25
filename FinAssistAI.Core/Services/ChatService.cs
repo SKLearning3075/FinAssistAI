@@ -28,6 +28,7 @@ namespace FinAssistAI.Core.Services
             await _conversationService.AddUserMessageAsync(
                 conversation,
                 request.Message);
+            Console.WriteLine($"User message added to conversation {conversation.Messages.Count}");
 
             var aiRequest = new AIChatRequest
             {
@@ -51,12 +52,14 @@ namespace FinAssistAI.Core.Services
                 aiResponse.CompletionTokens,
                 aiResponse.TotalTokens);
 
+            Console.WriteLine($"User message added to conversation {conversation.Messages.Count}");
+
             // Step 6
             await _conversationService.SaveAsync(conversation);
 
             return new ChatResponse
             {
-                ConversationId = conversation.Id,
+                ConversationId = conversation.ConversationId,
                 Answer = aiResponse.Content
             };
         }

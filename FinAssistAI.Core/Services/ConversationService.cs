@@ -49,8 +49,8 @@ namespace FinAssistAI.Core.Services
         {
             conversation.Messages.Add(new ConversationMessage
             {
-                Id = Guid.NewGuid(),
-                ConversationId = conversation.Id,
+                MessageId = Guid.NewGuid(),
+                ConversationId = conversation.ConversationId,
                 Role = MessageRole.Assistant,
                 Content = response,
                 PromptTokens = promptTokens,
@@ -68,8 +68,8 @@ namespace FinAssistAI.Core.Services
         {
             conversation.Messages.Add(new ConversationMessage
             {
-                Id = Guid.NewGuid(),
-                ConversationId = conversation.Id,
+                MessageId = Guid.NewGuid(),
+                ConversationId = conversation.ConversationId,
                 Role = MessageRole.User,
                 Content = message,
                 CreatedOn = DateTime.UtcNow

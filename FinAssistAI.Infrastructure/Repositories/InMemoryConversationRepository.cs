@@ -22,7 +22,7 @@ namespace FinAssistAI.Infrastructure.Repositories
         public Task DeleteAsync(Guid conversationId)
         {
             var conversation = _conversations
-                .FirstOrDefault(c => c.Id == conversationId);
+                .FirstOrDefault(c => c.ConversationId == conversationId);
 
             if (conversation != null)
             {
@@ -35,13 +35,13 @@ namespace FinAssistAI.Infrastructure.Repositories
         public Task<bool> ExistsAsync(Guid conversationId)
         {
             return Task.FromResult(
-                _conversations.Any(c => c.Id == conversationId));
+                _conversations.Any(c => c.ConversationId == conversationId));
         }
 
         public Task<Conversation?> GetByIdAsync(Guid conversationId)
         {
             var conversation = _conversations
-                .FirstOrDefault(c => c.Id == conversationId);
+                .FirstOrDefault(c => c.ConversationId == conversationId);
 
             return Task.FromResult(conversation);
         }
@@ -58,7 +58,7 @@ namespace FinAssistAI.Infrastructure.Repositories
         public Task UpdateAsync(Conversation conversation)
         {
             var existingConversation = _conversations
-                .FirstOrDefault(c => c.Id == conversation.Id);
+                .FirstOrDefault(c => c.ConversationId == conversation.ConversationId);
 
             if (existingConversation != null)
             {
