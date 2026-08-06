@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="AI\" />
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinAssistAI.Infrastructure.Persistence
+namespace FinAssistAI.Infrastructure.Repositories
 {
-    internal class ConversationRepository
+    public class ConversationRepository
     {
     }
 }

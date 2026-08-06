@@ -8,8 +8,8 @@ namespace FinAssistAI.Core.Enums
 {
     public enum MessageRole
     {
-        System,
-        User,
-        Assistant
+        System = 0,
+        User = 1,
+        Assistant = 2
     }
 }

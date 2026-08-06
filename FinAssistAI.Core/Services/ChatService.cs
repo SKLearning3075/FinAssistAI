@@ -28,7 +28,14 @@ namespace FinAssistAI.Core.Services
             await _conversationService.AddUserMessageAsync(
                 conversation,
                 request.Message);
-            Console.WriteLine($"User message added to conversation {conversation.Messages.Count}");
+
+            Console.WriteLine("===== Messages =====");
+
+            foreach (var m in conversation.Messages)
+            {
+                Console.WriteLine(
+                    $"Id={m.MessageId} | Role={m.Role} | Content={m.Content}");
+            }
 
             var aiRequest = new AIChatRequest
             {

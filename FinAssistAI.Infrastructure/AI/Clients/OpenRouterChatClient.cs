@@ -1,4 +1,5 @@
-﻿using FinAssistAI.Core.Interfaces.AI;
+﻿using FinAssistAI.Core.Enums;
+using FinAssistAI.Core.Interfaces.AI;
 using FinAssistAI.Core.Models.Common;
 using FinAssistAI.Core.Models.Request;
 using FinAssistAI.Infrastructure.AI.Configuration;
@@ -62,6 +63,7 @@ namespace FinAssistAI.Infrastructure.AI.Clients
             if (openRouterResponse == null)
                 throw new Exception("Unable to parse OpenRouter response.");
 
+            Console.WriteLine(openRouterResponse);
             return BuildResult(openRouterResponse);
 
         }
@@ -74,7 +76,7 @@ namespace FinAssistAI.Infrastructure.AI.Clients
             {
                 messages.Add(new ChatMessage
                 {
-                    Role = "system",
+                    Role = MessageRole.System.ToString().ToLower(),
                     Content = request.SystemPrompt
                 });
             }

@@ -40,7 +40,7 @@ namespace FinAssistAI.Core.Services
                 UpdatedOn = DateTime.UtcNow
             };
 
-            await _repository.CreateAsync(newConversation);
+            await _repository.AddAsync(newConversation);
 
             return newConversation;
         }
@@ -79,7 +79,6 @@ namespace FinAssistAI.Core.Services
 
             return Task.CompletedTask;
         }
-
         
         public async Task SaveAsync(Conversation conversation)
         {

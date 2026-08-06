@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinAssistAI.Core.Models.Common
 {
-    public class ConversationMessage: BaseEntity
+    public class ConversationMessage
     {
         public Guid MessageId { get; set; }
         public Guid ConversationId { get; set; }
@@ -16,5 +16,7 @@ namespace FinAssistAI.Core.Models.Common
         public int PromptTokens { get; set; }
         public int CompletionTokens { get; set; }
         public int TotalTokens { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
     }
 }

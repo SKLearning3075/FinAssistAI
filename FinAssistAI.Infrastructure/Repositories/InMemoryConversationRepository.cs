@@ -12,7 +12,7 @@ namespace FinAssistAI.Infrastructure.Repositories
     {
         private static readonly List<Conversation> _conversations = new();
 
-        public Task CreateAsync(Conversation conversation)
+        public Task AddAsync(Conversation conversation)
         {
             _conversations.Add(conversation);
 
@@ -36,6 +36,11 @@ namespace FinAssistAI.Infrastructure.Repositories
         {
             return Task.FromResult(
                 _conversations.Any(c => c.ConversationId == conversationId));
+        }
+
+        public Task<List<Conversation>> GetAllAsync(string userId)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<Conversation?> GetByIdAsync(Guid conversationId)

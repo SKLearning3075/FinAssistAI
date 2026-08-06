@@ -1,0 +1,18 @@
+﻿using FinAssistAI.Core.Models.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FinAssistAI.Core.Interfaces.Services
+{
+    public interface IDocumentProcessingQueue
+    {
+       public ValueTask QueueAsync(
+        DocumentProcessingMessage message);
+
+       public ValueTask<DocumentProcessingMessage> DequeueAsync(
+            CancellationToken cancellationToken);
+    }
+}
