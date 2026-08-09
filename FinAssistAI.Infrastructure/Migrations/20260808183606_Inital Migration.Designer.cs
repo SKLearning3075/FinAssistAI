@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinAssistAI.Infrastructure.Migrations
 {
     [DbContext(typeof(FinAssistDbContext))]
-    [Migration("20260804101223_AddDocuments")]
-    partial class AddDocuments
+    [Migration("20260808183606_Inital Migration")]
+    partial class InitalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

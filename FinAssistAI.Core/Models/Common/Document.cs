@@ -20,6 +20,11 @@ namespace FinAssistAI.Core.Models.Common
         public string ContentType { get; set; } = string.Empty;
 
         public long FileSize { get; set; }
+        public string FileName { get; set; }
+        public string FileExtension { get; set; }
+        public string Department { get; set; }
+        public string Description { get; set; }
+        public string Country { get; set; }
 
         public DocumentStatus Status { get; set; }
 
