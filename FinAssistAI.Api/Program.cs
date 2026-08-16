@@ -1,4 +1,5 @@
 using Azure;
+using Azure.Identity;
 using Azure.Search.Documents;
 using FinAssistAI.Infrastructure.AI.Configuration;
 using FinAssistAI.Infrastructure.DependencyInjection;
@@ -6,6 +7,26 @@ using FinAssistAI.Infrastructure.Search.Services;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
+
+if (!string.IsNullOrWhiteSpace(keyVaultUri))
+{
+    var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        TenantId = "17018ab6-95a3-43d1-83da-2438b7821432"
+    });
+
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(keyVaultUri),
+        credential);
+}
+
+var azureOpenAiKey =
+    builder.Configuration["AzureOpenAI:ApiKey"];
+Console.WriteLine(
+    $"Azure OpenAI API Key loaded: {!string.IsNullOrWhiteSpace(azureOpenAiKey)}");
 
 // Add services to the container.
 builder.Services.AddSingleton<SearchClient>(sp =>
@@ -28,11 +49,10 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
@@ -40,13 +60,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var indexManager =
-        scope.ServiceProvider
-            .GetRequiredService<AzureSearchIndexManager>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var indexManager =
+//        scope.ServiceProvider
+//            .GetRequiredService<AzureSearchIndexManager>();
 
-    await indexManager.CreateIndexAsync();
-}
+//    await indexManager.CreateIndexAsync();
+//}
 
 app.Run();

@@ -50,14 +50,14 @@ namespace FinAssistAI.Infrastructure.DependencyInjection
             services.AddDbContext<FinAssistDbContext>(options =>
             {
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"));
+                    configuration.GetConnectionString("DefaultConnection"),sqlOptions => sqlOptions.CommandTimeout(180));
             });
 
             // Register HttpClient + AI Client
             services.AddHttpClient<IAIChatClient, OpenRouterChatClient>();
 
             // Register business service
-            //services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IConversationService, ConversationService>();
             //services.AddScoped<IDocumentStorageService, LocalDocumentStorageService>();
             services.AddScoped<DocumentUploadOrchestrator>();
@@ -70,10 +70,10 @@ namespace FinAssistAI.Infrastructure.DependencyInjection
             services.AddScoped<IEmbeddingService, AzureOpenAIEmbeddingService>();
             //services.AddScoped<ISearchIndexService, FakeSearchIndexService>();
             services.AddScoped<ISearchIndexService, AzureSearchIndexService>();
-            services.AddSingleton<AzureSearchIndexManager>();
+            //services.AddSingleton<AzureSearchIndexManager>();
             services.AddScoped<IAzureSearchDocumentService, AzureSearchDocumentService>();
             services.AddScoped<IRagRetrievalService, RagRetrievalService>();
-            services.AddScoped<IChatService,AzureOpenAIChatService>();
+            //services.AddScoped<IChatService,AzureOpenAIChatService>();
             services.AddScoped<IRagService,RagService>();
             services.AddScoped<IRagChatService, AzureOpenAIRagChatService>();
             services.AddScoped<IDocumentStorageService, AzureBlobDocumentStorageService>();
