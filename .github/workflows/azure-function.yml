@@ -55,6 +55,16 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4DE332B714C64AA1BF338CFDA5E4E49A }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4215BC26C00E4A4DA286D0CDC2776D34 }}
 
+      - name: Verify Azure Function App
+        shell: pwsh
+        run: |
+          az account show
+          az functionapp show `
+            --name finassistai-functions-dev `
+            --resource-group finassist-dev-res-grp `
+            --query "{name:name,state:state,kind:kind,location:location}" `
+            --output table
+
       - name: Deploy Function
         uses: Azure/functions-action@v1
         with:
