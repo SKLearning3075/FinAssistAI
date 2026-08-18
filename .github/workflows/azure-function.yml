@@ -1,4 +1,4 @@
-name: Build and deploy Azure Function
+name: Build-deploy Azure Function
 
 on:
   push:
