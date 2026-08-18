@@ -48,5 +48,5 @@ jobs:
       - name: Deploy Function
         uses: Azure/functions-action@v1
         with:
-          app-name: '<YOUR-FUNCTION-APP-NAME>'
+          app-name: 'finassistai-functions-dev'
           package: './publish'
