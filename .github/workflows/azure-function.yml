@@ -1,0 +1,72 @@
+name: Build-deploy Azure Function
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-function:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore FinAssistAI.Functions/FinAssistAI.Functions.csproj
+
+      - name: Build
+        run: dotnet build FinAssistAI.Functions/FinAssistAI.Functions.csproj --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish FinAssistAI.Functions/FinAssistAI.Functions.csproj --configuration Release --output ./publish
+      - name: Verify Azure OIDC configuration
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace("${{ secrets.AZUREAPPSERVICE_CLIENTID_71772DE8E24C4B64A8E520B6C4822E48 }}")) {
+            Write-Error "CLIENT ID secret is empty"
+          }
+      
+          if ([string]::IsNullOrWhiteSpace("${{ secrets.AZUREAPPSERVICE_TENANTID_4DE332B714C64AA1BF338CFDA5E4E49A }}")) {
+            Write-Error "TENANT ID secret is empty"
+          }
+      
+          if ([string]::IsNullOrWhiteSpace("${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4215BC26C00E4A4DA286D0CDC2776D34 }}")) {
+            Write-Error "SUBSCRIPTION ID secret is empty"
+          }
+      
+          Write-Host "OIDC secret references are available."
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_71772DE8E24C4B64A8E520B6C4822E48 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4DE332B714C64AA1BF338CFDA5E4E49A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4215BC26C00E4A4DA286D0CDC2776D34 }}
+
+      - name: Verify Azure Function App
+        shell: pwsh
+        run: |
+          az account show
+          az functionapp show `
+            --name finassistai-functions-dev `
+            --resource-group finassist-dev-res-grp `
+            --query "{name:name,state:state,kind:kind,location:location}" `
+            --output table
+
+      - name: Deploy Function
+        uses: Azure/functions-action@v1
+        with:
+          app-name: 'finassistai-functions-dev'
+          package: './publish'
