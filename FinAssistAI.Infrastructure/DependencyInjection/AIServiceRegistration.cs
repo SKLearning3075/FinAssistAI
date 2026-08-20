@@ -54,8 +54,9 @@ namespace FinAssistAI.Infrastructure.DependencyInjection
             });
 
             // Register HttpClient + AI Client
-            services.AddHttpClient<IAIChatClient, OpenRouterChatClient>();
-
+            //services.AddHttpClient<IAIChatClient, OpenRouterChatClient>();
+            //services.AddHttpClient<IAIChatClient, AzureOpenAIChatClient>();
+            services.AddSingleton<IAIChatClient, AzureOpenAIChatClient>();
             // Register business service
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IConversationService, ConversationService>();
@@ -77,6 +78,7 @@ namespace FinAssistAI.Infrastructure.DependencyInjection
             services.AddScoped<IRagService,RagService>();
             services.AddScoped<IRagChatService, AzureOpenAIRagChatService>();
             services.AddScoped<IDocumentStorageService, AzureBlobDocumentStorageService>();
+            //services.AddSingleton<AzureOpenAIService>();
 
 
 
