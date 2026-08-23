@@ -1,7 +1,9 @@
-﻿using FinAssistAI.Core.Interfaces.Repositories;
+﻿using FinAssistAI.Contracts.Events;
+using FinAssistAI.Core.Interfaces.Repositories;
 using FinAssistAI.Core.Interfaces.Services;
 using FinAssistAI.Core.Models.Common;
 using FinAssistAI.Infrastructure.AI.Services;
+using FinAssistAI.Infrastructure.Entities;
 using FinAssistAI.Infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,28 +22,47 @@ namespace FinAssistAI.Infrastructure.Processing
         private readonly IChunkingService _chunkingService;
         private readonly IEmbeddingService _embeddingService;
         private readonly ISearchIndexService _searchIndexService;
+        private readonly IDocumentProcessEventRepository _documentProcessEventRepository;
 
         public DocumentProcessor(ITextExtractionService textExtractionService,
-            ILogger<DocumentProcessor> logger, IDocumentRepository documentRepository, IChunkingService chunkingService, IEmbeddingService embeddingService, ISearchIndexService searchIndexService)
+            ILogger<DocumentProcessor> logger, IDocumentRepository documentRepository, IChunkingService chunkingService, IEmbeddingService embeddingService, ISearchIndexService searchIndexService, IDocumentProcessEventRepository documentProcessEventRepository)
         {
             _logger = logger;
+            _documentProcessEventRepository = documentProcessEventRepository;
             _textExtractionService = textExtractionService;
             _documentRepository = documentRepository;
             _chunkingService = chunkingService;
             _embeddingService = embeddingService;
             _searchIndexService = searchIndexService;
         }
-        public async Task ProcessAsync(Guid documentId, CancellationToken cancellationToken)
+        public async Task ProcessAsync(Guid documentId, CancellationToken cancellationToken, Guid eventId = default, string idempotencyKey = default)
         {
             _logger.LogInformation($"Processing document with ID: {documentId}");
 
             var document = await _documentRepository.GetByIdAsync(documentId);
+
+            DocumentProcessEvent documentProcessEvent = new DocumentProcessEvent
+            {
+                IdempotencyKey = idempotencyKey,
+                EventId = eventId,
+                ProcessedAt = DateTime.UtcNow
+            };
+
+            if (_documentProcessEventRepository.IsExist(documentProcessEvent.IdempotencyKey))
+            {
+                _logger.LogInformation($"Document with ID: {documentId} has already been processed. Skipping.");
+                return;
+            }
+            else { 
+                await _documentProcessEventRepository.AddAsync(documentProcessEvent);
+            }
+
             if (document == null)
                 throw new Exception("Document not found.");
 
-           var pdfText =  await _textExtractionService.ExtractTextAsync(document.StoredFilePath, cancellationToken);
-
-           var chunksResult = await _chunkingService.ChunkAsync(pdfText, cancellationToken);
+           
+            var pdfText =  await _textExtractionService.ExtractTextAsync(document.StoredFilePath, cancellationToken);
+            var chunksResult = await _chunkingService.ChunkAsync(pdfText, cancellationToken);
 
             for (int i = 0; i < chunksResult.Count; i++)
             {
@@ -52,33 +73,20 @@ namespace FinAssistAI.Infrastructure.Processing
                 var searchDocument = new SearchDocument
                 {
                     Id = Guid.NewGuid().ToString(),
-
                     DocumentId = document.DocumentId,
-
                     FileName = document.FileName,
-
                     Department = document.Department,
-
                     Country = document.Country,
-
                     PageNumber = 1,
-
                     ChunkNumber = i + 1,
-
                     Content = chunksResult[i],
-
                     ContentVector = embedding
                 };
 
                 await _searchIndexService.IndexDocumentAsync(
                                           searchDocument,
                                           cancellationToken);
-
             }
-            
-            _logger.LogInformation("Generated {Count} chunks", chunksResult.Count);
-
-            _logger.LogInformation($"Finished processing document with ID: {documentId}");
         }
     }
 }

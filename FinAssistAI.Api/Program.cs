@@ -1,32 +1,30 @@
 using Azure;
 using Azure.Identity;
+using Azure.Messaging.ServiceBus;
 using Azure.Search.Documents;
+using FinAssistAI.Core.Interfaces.Services;
 using FinAssistAI.Infrastructure.AI.Configuration;
 using FinAssistAI.Infrastructure.DependencyInjection;
 using FinAssistAI.Infrastructure.Search.Services;
 using Microsoft.Extensions.Options;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var keyVaultUri = builder.Configuration["KeyVault:VaultUri"];
 
-if (!string.IsNullOrWhiteSpace(keyVaultUri))
-{
-    var credential = new DefaultAzureCredential(
+var credential = new DefaultAzureCredential(
     new DefaultAzureCredentialOptions
     {
         TenantId = "17018ab6-95a3-43d1-83da-2438b7821432"
     });
 
+if (!string.IsNullOrWhiteSpace(keyVaultUri))
+{
     builder.Configuration.AddAzureKeyVault(
         new Uri(keyVaultUri),
         credential);
 }
-
-var azureOpenAiKey =
-    builder.Configuration["AzureOpenAI:ApiKey"];
-Console.WriteLine(
-    $"Azure OpenAI API Key loaded: {!string.IsNullOrWhiteSpace(azureOpenAiKey)}");
 
 // Add services to the container.
 builder.Services.AddSingleton<SearchClient>(sp =>
@@ -40,6 +38,8 @@ builder.Services.AddSingleton<SearchClient>(sp =>
         options.IndexName,
         new AzureKeyCredential(options.ApiKey));
 });
+
+
 builder.Services.RegisterAIService(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,13 +60,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var indexManager =
+        scope.ServiceProvider
+            .GetRequiredService<AzureSearchIndexManager>();
+
+    await indexManager.CreateIndexAsync();
+}
 //using (var scope = app.Services.CreateScope())
 //{
-//    var indexManager =
-//        scope.ServiceProvider
-//            .GetRequiredService<AzureSearchIndexManager>();
-
-//    await indexManager.CreateIndexAsync();
+//    scope.ServiceProvider.GetRequiredService<IDocumentProcessor>();
 //}
-
 app.Run();

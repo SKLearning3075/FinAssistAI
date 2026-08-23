@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Tests", "FinAss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Functions", "FinAssistAI.Functions\FinAssistAI.Functions.csproj", "{BF6991EC-4CBB-4DA3-9E4B-AD9E987BCB5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.ServiceBusFunction", "FinAssistAI.ServiceBusFunction\FinAssistAI.ServiceBusFunction.csproj", "{C50DD75F-4027-4EBD-83AA-250FEE4DA895}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinAssistAI.Contracts", "FinAssistAI.Contracts\FinAssistAI.Contracts.csproj", "{4965BA76-07DA-47DD-93C3-2EAD8C664AA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{BF6991EC-4CBB-4DA3-9E4B-AD9E987BCB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF6991EC-4CBB-4DA3-9E4B-AD9E987BCB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF6991EC-4CBB-4DA3-9E4B-AD9E987BCB5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50DD75F-4027-4EBD-83AA-250FEE4DA895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50DD75F-4027-4EBD-83AA-250FEE4DA895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50DD75F-4027-4EBD-83AA-250FEE4DA895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50DD75F-4027-4EBD-83AA-250FEE4DA895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4965BA76-07DA-47DD-93C3-2EAD8C664AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4965BA76-07DA-47DD-93C3-2EAD8C664AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4965BA76-07DA-47DD-93C3-2EAD8C664AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4965BA76-07DA-47DD-93C3-2EAD8C664AA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +67,8 @@ Global
 		{C024E619-3501-4228-87C5-8C8D3B016CF2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A0B38734-FE9C-4336-B8AA-B61B317BCC08} = {55497EB6-9EBC-4A08-8682-0DCBE01FB5DA}
 		{BF6991EC-4CBB-4DA3-9E4B-AD9E987BCB5A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C50DD75F-4027-4EBD-83AA-250FEE4DA895} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{4965BA76-07DA-47DD-93C3-2EAD8C664AA3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {808E32EE-6481-4041-8467-541CF3D43678}

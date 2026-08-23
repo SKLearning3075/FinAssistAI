@@ -18,6 +18,7 @@ namespace FinAssistAI.Infrastructure.Persistence
         public DbSet<ConversationEntity> Conversations { get; set; }
         public DbSet<ConversationMessageEntity> ConversationMessages { get; set; }
         public DbSet<DocumentEntity> Documents { get; set; }
+        public DbSet<ProcessedMessage> ProcessedMessages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -10,6 +10,6 @@ namespace FinAssistAI.Core.Interfaces.Services
     {
         Task ProcessAsync(
         Guid documentId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken, Guid eventId = default, string idempotencyKey = default);
     }
 }

@@ -47,17 +47,11 @@ namespace FinAssistAI.Infrastructure.AI.Services
                     "Text cannot be empty.",
                     nameof(text));
             }
-            
 
             var result = await _embeddingClient.GenerateEmbeddingAsync(
                     text,
                     cancellationToken: cancellationToken);
-
-            //OpenAIEmbedding embedding = result.Value;
-
-            //ReadOnlyMemory<float> vector = embedding.ToFloats();
-
-            //return vector.ToArray();
+            
             return result.Value
                             .ToFloats()
                             .ToArray();

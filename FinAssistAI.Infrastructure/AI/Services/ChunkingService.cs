@@ -14,7 +14,7 @@ namespace FinAssistAI.Infrastructure.AI.Services
             int chunkSize = 1000;
             int overlapChunk = 200;
             int extractedTextLength = 0;
-            List<string> lstChunk = [];
+            List<string> lstChunk = new List<string>();
 
             if (string.IsNullOrEmpty(text))
             {
