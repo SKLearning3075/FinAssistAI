@@ -30,16 +30,16 @@ namespace FinAssistAI.Infrastructure.DependencyInjection
     {
         public static IServiceCollection RegisterAIService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<SearchIndexClient>(sp =>
-            {
-                var options = sp
-                    .GetRequiredService<IOptions<AzureSearchOptions>>()
-                    .Value;
+            //services.AddSingleton<SearchIndexClient>(sp =>
+            //{
+            //    var options = sp
+            //        .GetRequiredService<IOptions<AzureSearchOptions>>()
+            //        .Value;
 
-                return new SearchIndexClient(
-                    new Uri(options.Endpoint),
-                    new AzureKeyCredential(options.ApiKey));
-            });
+            //    return new SearchIndexClient(
+            //        new Uri(options.Endpoint),
+            //        new AzureKeyCredential(options.ApiKey));
+            //});
 
             services.AddSingleton<ServiceBusClient>(sp =>
             {

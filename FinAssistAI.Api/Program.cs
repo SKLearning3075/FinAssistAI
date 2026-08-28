@@ -60,14 +60,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var indexManager =
-        scope.ServiceProvider
-            .GetRequiredService<AzureSearchIndexManager>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var indexManager =
+//        scope.ServiceProvider
+//            .GetRequiredService<AzureSearchIndexManager>();
 
-    await indexManager.CreateIndexAsync();
-}
+//    await indexManager.CreateIndexAsync();
+//}
 //using (var scope = app.Services.CreateScope())
 //{
 //    scope.ServiceProvider.GetRequiredService<IDocumentProcessor>();
